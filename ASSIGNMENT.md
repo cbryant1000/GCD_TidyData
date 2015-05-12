@@ -1,5 +1,6 @@
 # GCD_TidyData
-## Coursera, JHU, Getting and Cleaning Data - Course Project  
+## Coursera, JHU, Getting and Cleaning Data  
+## Course Project - Assignment Description
 
 The purpose of this project is to demonstrate your ability to collect, work with, and clean a data set. The goal is to prepare tidy data that can be used for later analysis. You will be graded by your peers on a series of yes/no questions related to the project. You will be required to submit:  
 1. a tidy data set as described below,  
@@ -23,13 +24,3 @@ You should create one R script called run_analysis.R that does the following:
 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.  
 
 Good luck!
-
-***
-
-#### List of Files for this Project
-File Name | Purpose
---------- | -------
-README.md | How all of the scripts work, and how they are connected.
-CodeBook.md | Describes the variables, the data, and any transformation or work performed to clean up the data.
-run_analysis.R | R script to perform the analysis.
-tidydata.txt | *Tidy data* set that is the result of this analysis (Step 5).
