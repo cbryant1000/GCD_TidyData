@@ -2,6 +2,8 @@
 ## Coursera.org, JHU, "Getting and Cleaning Data."
 ## Course Project - read.dataset script.
 
+## Reads a particular 'type' of data set (test or training) into a data frame.
+## Combines the accelerometer, subject, and activity data into a single data frame.
 read.dataset <- function(dataType, cols, names, activity_labels) {
   df <- read.features(getFileName(dataType, "X"), cols, names)
   subjects  <- read.table(getFileName(dataType, "subject"),col.names=c("subject_id"))
