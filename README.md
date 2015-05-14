@@ -2,6 +2,8 @@
 # GCD_TidyData
 ## Coursera, JHU, Getting and Cleaning Data - Course Project
   
+  <center><img style="border:2px ridge #999" src="readme.scripts.png"></img></center>
+
 #### List of Files for this Project  
 
 File Name | Purpose
