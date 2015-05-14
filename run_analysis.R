@@ -1,38 +1,20 @@
 
 ## Coursera.org, JHU, "Getting and Cleaning Data.".
-## Course Project - R Analysis Script.
-
-## Acknowledgements:
-## 1. StackOverflow: "What is a good way to read line-by-line in R?"
-##    fehttp://stackoverflow.com/questions/4106764/what-is-a-good-way-to-read-line-by-line-in-r
+## Course Project - Run analysis script.
 
 library(dplyr)
 library(stringr)
+source("../read.features.R")
+source("../read.dataset.R")
 
+## Read the feature list, and subset by the mean and std variable names.
 features <- read.table("features.txt",col.names=c("id","quantity"))
 cols <- sort(c(grep(".*mean\\(.*",features$quantity),grep(".*std\\(.*",features$quantity)))
-feature_names <- as.character(filter(features, id %in% cols)$quantity)
-names <- c("subject","activity",feature_names)
-activities <- read.table("activity_labels.txt",col.names=c("id","label"))
+names <- as.character(filter(features, id %in% cols)$quantity)
+activity_labels <- read.table("activity_labels.txt",col.names=c("activity_id","activity"))
 
-con_X  <- file("./test/X_test.txt", open = "r")
-con_sub  <- file("./test/subject_test.txt", open = "r")
-con_y  <- file("./test/y_test.txt", open = "r")
-
-df <- data.frame()
-
-while (length(line_X <- readLines(con_X, n = 1, warn = FALSE)) > 0) {
-  line_X <- unlist(strsplit(line_X," "))
-  line_X <- as.numeric(line_X[line_X != ""])
-  line_X <- line_X[cols]
-  line_sub <- readLines(con_sub, n = 1, warn = FALSE)
-  line_y <- readLines(con_y, n = 1, warn = FALSE)
-  row <- data.frame(line_sub, line_y, t(line_X))
-  df <- bind_rows(df, row)
-} 
-
-names(df) <- names
-
-close(con_X)
-close(con_sub)
-close(con_y)
+## Read the test and training data sets.  Combine and sort them into a single data frame.
+df_test <- read.dataset("./test/X_test.txt", "./test/subject_test.txt", "./test/y_test.txt", cols, names, activity_labels)
+df_train <- read.dataset("./train/X_train.txt", "./train/subject_train.txt", "./train/y_train.txt", cols, names, activity_labels)
+df <- bind_rows(df_test, df_train)
+df <- arrange(df, subject_id, activity_id)
