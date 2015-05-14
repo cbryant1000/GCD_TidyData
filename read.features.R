@@ -9,16 +9,16 @@
 read.features <- function(fileName, cols, names) {
 
   df <- data.frame()
-  con_X  <- file(fileName, open = "r")
+  con  <- file(fileName, open = "r")
   
-  while (length(line_X <- readLines(con_X, n = 1, warn = FALSE)) > 0) {
-    line_X <- unlist(strsplit(line_X," "))
-    line_X <- as.numeric(line_X[line_X != ""])
-    line_X <- line_X[cols]
-    df <- bind_rows(df, data.frame(t(line_X)))
+  while (length(line <- readLines(con, n = 1, warn = FALSE)) > 0) {
+    line <- unlist(strsplit(line," "))
+    line <- as.numeric(line[line != ""])
+    line <- line[cols]
+    df <- bind_rows(df, data.frame(t(line)))
   } 
   
-  close(con_X)
+  close(con)
   names(df) <- names
   df
 }

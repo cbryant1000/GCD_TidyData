@@ -6,15 +6,13 @@ library(dplyr)
 library(stringr)
 source("../read.features.R")
 source("../read.dataset.R")
+source("../create.dataset.R")
 
-## Read the feature list, and subset by the mean and std variable names.
-features <- read.table("features.txt",col.names=c("id","quantity"))
-cols <- sort(c(grep(".*mean\\(.*",features$quantity),grep(".*std\\(.*",features$quantity)))
-names <- as.character(filter(features, id %in% cols)$quantity)
-activity_labels <- read.table("activity_labels.txt",col.names=c("activity_id","activity"))
-
-## Read the test and training data sets.  Combine and sort them into a single data frame.
-df_test <- read.dataset("./test/X_test.txt", "./test/subject_test.txt", "./test/y_test.txt", cols, names, activity_labels)
-df_train <- read.dataset("./train/X_train.txt", "./train/subject_train.txt", "./train/y_train.txt", cols, names, activity_labels)
-df <- bind_rows(df_test, df_train)
-df <- arrange(df, subject_id, activity_id)
+## 1. Create a merged data frame containing all the relevant data.
+## 2. Group the data by subject and activity.  Calculate the mean of the grouped data.
+## 3. Write the summarized data to a file.
+start <- proc.time()
+df <- create.dataset()
+tidyData <- df %>% group_by(subject_id, activity) %>% summarise_each(.,funs(mean))
+write.table(tidyData, file="../tidydata.txt")
+print(proc.time() - start)
